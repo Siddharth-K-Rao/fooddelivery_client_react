@@ -12,6 +12,7 @@ const initialstate = {
   //address: "",
   houseno: "",
   street: "",
+  role: [],
 };
 
 export const Register = ({ isAuthenticated, register }) => {
@@ -19,8 +20,16 @@ export const Register = ({ isAuthenticated, register }) => {
 
   const [errors, setErrors] = useState({});
 
-  const { username, email, password, password2, address, houseno, street } =
-    state;
+  const {
+    username,
+    email,
+    password,
+    password2,
+    address,
+    houseno,
+    street,
+    roleuser,
+  } = state;
 
   const onChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -37,11 +46,23 @@ export const Register = ({ isAuthenticated, register }) => {
     const statename = document.getElementById("statename");
     const zipcode = document.getElementById("zipcode");
 
-    var address = houseno.value + ", " + street.value + ", " + city.value + ", " + statename.value + ", " + zipcode.value;
+    var address =
+      houseno.value +
+      ", " +
+      street.value +
+      ", " +
+      city.value +
+      ", " +
+      statename.value +
+      ", " +
+      zipcode.value;
+
+    var role = roleuser.split(",");
+    role.forEach((e) => console.log(e));
     if (password !== password2) {
       // We need to inform, passwords are not matching
     } else {
-      register({ username, email, password, address });
+      register({ username, email, password, address, role});
     }
   };
 
@@ -154,16 +175,16 @@ export const Register = ({ isAuthenticated, register }) => {
             />
             <div>{errors.password2}</div>
           </div>
-          {/* <div className="form-group">
+          <div className="form-group">
             <input
               type="text"
               placeholder="Role"
-              name="role"
-              value={role}
+              name="roleuser"
+              value={roleuser}
               onChange={onChange}
               required
             />
-          </div> */}
+          </div>
           <input type="submit" className="btn btn-primary" value="Register" />
         </form>
         <p className="my-1">
